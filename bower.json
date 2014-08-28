@@ -1,0 +1,20 @@
+{
+  "name": "tan",
+  "version": "0.0.1",
+  "authors": [
+    "Hiroaki Sano"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/hiroakis",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "srvadm/static/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1"
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>tan</title>
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">tan</a>
+        </div>
+      </div>
+    </div><!-- navibar -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="nav-header">History</li>
+            <% history.each do |h| %>
+              <li><a href="<%= h %>"><%= h %></a></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="col-sm-6 main">
+          <form method="post" action="/" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="#url">URL</label>
+              <div class="controls">
+                <input type="text" id="url" name="url" size="100", maxlength="100" placeholder="url">
+                <button class="btn btn-primary" id="shorten">shorten</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="#result">result</label>
+              <div class="controls">
+                <input type="text" id="result" name="result" value="<%= result %>" size="40" maxlength="40" placeholder="result">
+              </div>
+            </div>
+
+          </form>
+        </div>
+      <hr>
+      </div><!-- row -->
+    </div><!-- container-fluid -->
+
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
