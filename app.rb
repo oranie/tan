@@ -57,7 +57,14 @@ class Tan < Sinatra::Base
     if used.nil? then
         shotend_url = mysql.query('select "{shotend_url}" from tan where real_url_hash = "#{real_url_hash}"').first()
     else
-        mysql.query("insert into tan (shortened_url, real_url, real_url_hash,created_at) values ('#{shortened_url}', '#{real_url}','#{real_url_hash}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
+      while true
+          shotend_url = mysql.query('select "{shotend_url}" from tan where shotend_url = "#{shotend_url}"').first()
+          if shotend_url.nil then
+            mysql.query("insert into tan (shortened_url, real_url, real_url_hash,created_at) values ('#{shortened_url}', '#{real_url}','#{real_url_hash}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
+            break
+          end
+          shortened_url = "#{base_url}/#{random_string}"
+      end
     end
 
     session[:result] = shortened_url
