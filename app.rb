@@ -52,22 +52,26 @@ class Tan < Sinatra::Base
     real_url = params[:url]
     shortened_url = "#{base_url}/#{random_string}"
     real_url_hash = Digest::SHA1.hexdigest("#{real_url}")
+    p "real_url_hash : #{real_url_hash}"
     mysql = conn
-    used = mysql.query('select real_url_hash from tan where real_url_hash = "#{real_url_hash}"').first()
+    used = mysql.query("select real_url_hash from tan where real_url_hash = '#{real_url_hash}'").first()
+    p "used : #{used}"
+
     if used.nil? then
-        shotend_url = mysql.query('select "{shotend_url}" from tan where real_url_hash = "#{real_url_hash}"').first()
-    else
-      while true
-          shotend_url = mysql.query('select "{shotend_url}" from tan where shotend_url = "#{shotend_url}"').first()
-          if shotend_url.nil then
-            mysql.query("insert into tan (shortened_url, real_url, real_url_hash,created_at) values ('#{shortened_url}', '#{real_url}','#{real_url_hash}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
-            break
+      while true do
+          check_shortened_url = mysql.query('select shortened_url from tan where shortened_url = "#{shortened_url}"').first()
+          p "chack : #{check_shortened_url}"
+          if check_shortened_url.nil? then
+              mysql.query("insert into tan (shortened_url, real_url, real_url_hash,created_at) values ('#{shortened_url}', '#{real_url}','#{real_url_hash}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
+              break
           end
           shortened_url = "#{base_url}/#{random_string}"
       end
+    else
+        shortened_url = mysql.query("select shortened_url from tan where real_url_hash = '#{real_url_hash}'").first()
+        session[:result] = shortened_url["shortened_url"]
     end
 
-    session[:result] = shortened_url
     redirect '/'
   end
 
