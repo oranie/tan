@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `tan`;
 CREATE TABLE `tan` (
   `shortened_url` varchar(64) NOT NULL,
   `real_url` text NOT NULL,
+  `real_url_hash` varchar(255) UNIQUE NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`shortened_url`),
   KEY `idx_createdAt` (`created_at`)
