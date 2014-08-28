@@ -54,7 +54,6 @@ class Tan < Sinatra::Base
     real_url_hash = Digest::SHA1.hexdigest("#{real_url}")
     mysql = conn
     used = mysql.query('select real_url_hash from tan where real_url_hash = "#{real_url_hash}"').first()
-    p used
     if used.nil? then
         shotend_url = mysql.query('select "{shotend_url}" from tan where real_url_hash = "#{real_url_hash}"').first()
     else
