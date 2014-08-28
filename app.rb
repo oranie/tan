@@ -12,7 +12,6 @@ class Tan < Sinatra::Base
   end
 
   helpers do
-
     def random_string
       s = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map { |i| i.to_a }.flatten
       (0...8).map { s[rand(s.length)] }.join
@@ -52,16 +51,15 @@ class Tan < Sinatra::Base
   post '/' do
     real_url = params[:url]
     shortened_url = "#{base_url}/#{random_string}"
-
+    real_url_hash = Digest::SHA1.hexdigest("#{real_url}")
     mysql = conn
-    while
-      used = mysql.query('select shortened_url from tan where shortened_url = "#{shortened_url}"').first()
-      if not used
-        break
-      end
+    used = mysql.query('select real_url_hash from tan where real_url_hash = "#{real_url_hash}"').first()
+    p used
+    if used.nil? then
+        shotend_url = mysql.query('select "{shotend_url}" from tan where real_url_hash = "#{real_url_hash}"').first()
+    else
+        mysql.query("insert into tan (shortened_url, real_url, real_url_hash,created_at) values ('#{shortened_url}', '#{real_url}','#{real_url_hash}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
     end
-
-    mysql.query("insert into tan (shortened_url, real_url, created_at) values ('#{shortened_url}', '#{real_url}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}')")
 
     session[:result] = shortened_url
     redirect '/'
