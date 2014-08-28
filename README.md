@@ -1,6 +1,6 @@
 ## My Ruby study
 
-URL shorter service.
+URL shorter service using Sinatra and MySQL.
 
 rubyの勉強しようと思って何となく作ったURL短縮サービス的なもの。
 
