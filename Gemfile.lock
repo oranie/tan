@@ -3,7 +3,7 @@ GEM
   specs:
     celluloid (0.15.2)
       timers (~> 1.1.0)
-    ffi (1.9.3)
+    ffi (1.11.3)
     kgio (2.9.2)
     listen (2.7.9)
       celluloid (>= 0.15.2)
